@@ -158,7 +158,8 @@ class S3Publisher(Publisher):
         )
 
     def connect(self, credentials):
-        self.s3 = boto3.resource(service_name='s3')
+        session = boto3.Session(profile_name=credentials['username'])
+        self.s3 = session.resource(service_name='s3')
 
     def publish(self, target_url, credentials=None):
         if credentials is None:
